@@ -1,0 +1,89 @@
+1. The HR department needs a list of department IDs for
+departments that do not contain the job ID ST_CLERK.
+Hint: use MINUS
+
+SELECT department_id
+FROM employees
+MINUS
+SELECT department_id
+FROM employees
+WHERE job_id = 'ST_CLERK';
+
+
+2. Create a report that lists the detail of all employees
+who are sales representatives and are currently working
+in the sales department.
+Hint: use INTERSECT, namely query1 INTERSECT query2
+
+SELECT employee_id, last_name, job_id, department_id
+FROM employees
+WHERE job_id = 'SA_REP'
+INTERSECT
+SELECT employee_id, last_name, job_id, department_id
+FROM employees
+WHERE department_id = 80;
+
+
+3. Change the salary to $1,000 for all employees with a
+salary less than $900.
+
+UPDATE employees
+SET salary = 1000
+WHERE salary < 900;
+
+
+4. Confirm that the new row was added with the
+correct USERID.
+Hint: use WHERE based on a chosen ID
+
+SELECT *
+FROM employees
+WHERE EMPLOYEE_ID = 100;
+
+
+5. Create the DEPT table based on the following
+table instance chart.
+
+CREATE TABLE DEPT (
+  ID NUMBER(7) PRIMARY KEY,
+  NAME VARCHAR2(25)
+);
+
+
+6. Add a column JOB_ID in the EMPLOYEES2 table.
+
+ALTER TABLE EMPLOYEES2
+ADD (JOB_ID VARCHAR2(10));
+
+
+7. Department 80 needs access to its employee data.
+Create a view named DEPT80 that contains the
+employee numbers, employee last names, and
+department numbers for all employees in
+department 80. They have requested that you label
+the view columns EMPNO, EMPLOYEE, and
+DEPTNO. For security purposes, do not allow an
+employee to be reassigned to another department
+through the view.
+Hint: after WHERE put WITH CHECK OPTION
+CONSTRAINT emp_dept_80;
+
+CREATE VIEW DEPT80
+AS SELECT employee_id AS EMPNO,
+          last_name AS EMPLOYEE,
+          department_id AS DEPTNO
+FROM employees
+WHERE department_id = 80
+WITH CHECK OPTION CONSTRAINT emp_dept_80;
+
+
+8. Attempt to reassign Abel to department 50.
+Hint: use
+UPDATE viewName
+SET …
+WHERE …;
+
+UPDATE DEPT80
+SET DEPTNO = 50
+WHERE EMPLOYEE = 'Abel';
+

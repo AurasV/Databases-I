@@ -1,0 +1,108 @@
+1. Create a report that produces the following for each
+employee: <employee last name> earns <salary> monthly
+but wants <3 times salary.>. Label the column Dream
+Salaries.
+
+SELECT last_name || ' earns ' || TO_CHAR(salary) || ' monthly but wants ' || TO_CHAR(salary * 3) || '.' AS "Dream Salaries"
+FROM employees;
+
+
+
+2. Create a query that displays employees’ last names and
+commission amounts. If an employee does not earn
+commission, show “No Commission.” Label the column
+COMM.
+Hint: NVL(TO_CHAR(commission_pct), 'No Commission')
+
+SELECT last_name,
+       NVL(TO_CHAR(commission_pct), 'No Commission') AS COMM
+FROM employees;
+
+
+3. Write a query to display the number of people with the same
+job.
+Hint: use GROUP BY job_id
+
+SELECT job_id, COUNT(*) AS number_of_people
+FROM employees
+GROUP BY job_id;
+
+
+4. Find the difference between the highest and lowest salaries.
+Label the column DIFFERENCE.
+
+SELECT MAX(salary) - MIN(salary) AS DIFFERENCE
+FROM employees;
+
+
+5. The HR department needs a report of all employees with
+corresponding departments. Write a query to display the last
+name, department number, and department name for these
+employees.
+Hint: FROM x JOIN y USING (department_id)
+
+SELECT e.last_name, department_id, d.department_name
+FROM employees e
+JOIN departments d USING (department_id);
+
+
+6. Create a report to display employees’ last names and employee
+numbers along with their managers’ last names and manager
+numbers. Label the columns Employee, Emp#, Manager, and
+Mgr#, respectively.
+Hint: FROM x xx JOIN y yy ON (xx.smth1 = yy.smth2)
+
+SELECT e1.last_name AS "Employee", 
+       e1.employee_id AS "Emp#", 
+       e2.last_name AS "Manager", 
+       e2.employee_id AS "Mgr#"
+FROM employees e1
+JOIN employees e2 ON e1.manager_id = e2.employee_id;
+
+
+7. Modify ex. 6 to display all employees, including King,
+who has no manager.
+Hint:
+FROM employees w
+LEFT OUTER JOIN employees m
+ON (w.manager_id = m.employee_id)
+
+SELECT w.last_name AS "Employee", 
+       w.employee_id AS "Emp#", 
+       m.last_name AS "Manager", 
+       m.employee_id AS "Mgr#"
+FROM employees w
+LEFT OUTER JOIN employees m ON w.manager_id = m.employee_id;
+
+
+8. Write a query that displays the employee number and
+last name of all employees who work in a department with
+any employee whose last name contains the letter “u.”
+Hint: WHERE x LIKE ‘%u%’
+
+SELECT DISTINCT e1.employee_id, e1.last_name
+FROM employees e1
+JOIN employees e2 ON e1.department_id = e2.department_id
+WHERE e2.last_name LIKE '%u%'
+
+
+9. The HR department needs a report that displays
+the last name, department number, and job ID of all
+employees whose department location ID is 1700.
+
+SELECT e.last_name, e.department_id, e.job_id
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+WHERE d.location_id = 1700;
+
+
+10. Create a report for HR that displays the
+department number, last name, and job ID for every
+employee in the Executive department.
+Hint: WHERE department_name = 'Executive'
+
+SELECT e.department_id, e.last_name, e.job_id
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+WHERE d.department_name = 'Executive';
+

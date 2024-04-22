@@ -1,0 +1,72 @@
+1. Create a report to display the last name, job ID,
+and hire date for employees with the last names of
+Matos and Taylor. Order the query in ascending
+order by hire date.
+
+SELECT last_name, job_id, hire_date
+FROM employees
+WHERE last_name IN ('Matos', 'Taylor')
+ORDER BY hire_date ASC;
+
+
+2. Create a report to display the last name and job
+title of all employees who do not have a manager.
+
+SELECT last_name, job_id
+FROM employees
+WHERE manager_id IS NULL;
+
+
+3. The HR department wants to find the duration of
+employment for each employee. For each employee,
+display the last name and calculate the number of
+months between today and the date on which the
+employee was hired. Label the column as
+MONTHS_WORKED. Order your results by the
+number of months employed. The number of months
+must be rounded to the closest whole number.
+Hint: ROUND(MONTHS_BETWEEN(SYSDATE,
+hire_date))
+
+SELECT last_name,
+       ROUND(MONTHS_BETWEEN(SYSDATE, hire_date)) AS MONTHS_WORKED
+FROM employees
+ORDER BY MONTHS_WORKED;
+
+
+4. Create a query that displays the employees’ last names,
+and indicates the amounts of their salaries with asterisks.
+Each asterisk signifies a thousand dollars. Sort the data in
+descending order of salary. Label the column
+EMPLOYEES_AND_THEIR_SALARIES.
+Hint: rpad(' ', salary/1000, '*')
+
+SELECT last_name,
+       RPAD('*', FLOOR(salary/1000), '*') AS EMPLOYEES_AND_THEIR_SALARIES
+FROM employees
+ORDER BY salary DESC;
+
+
+5. Create a query to display the last name and salary for all
+employees. Format the salary to be 15 characters long, left-
+padded with the $ symbol. Label the column SALARY.
+Hint: LPAD(salary, 15, '$')
+
+SELECT last_name,
+       LPAD(TO_CHAR(salary), 15, '$') AS SALARY
+FROM employees;
+
+
+6. Create a query to display the last name and the
+number of weeks employed for all employees in
+department 90. Label the number of weeks column
+as TENURE. Truncate the number of weeks value to
+0 decimal places. Show the records in descending
+order of the employee’s tenure.
+Hint: trunc((SYSDATE-hire_date)/7)
+
+SELECT last_name,
+       TRUNC((SYSDATE - hire_date)/7) AS TENURE
+FROM employees
+WHERE department_id = 90
+ORDER BY TENURE DESC;

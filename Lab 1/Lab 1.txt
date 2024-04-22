@@ -1,0 +1,54 @@
+1. Does the following SELECT statement execute
+successfully?
+SELECT last_name, job_id, salary AS Sal
+FROM employees;
+
+Yes it executes succesffully.
+
+
+2. There are four coding errors in the following
+statement. Can you identify them?
+SELECT employee_id, last_name
+sal x 12 ANNUAL SALARY
+FROM employees;
+
+missing comma after last_name, sal should be salary, x should be * and the alias needs "" for ANNUAL SALARY
+corrected statement: 
+SELECT employee_id, last_name, salary * 12 AS "ANNUAL SALARY"
+FROM employees;
+
+
+3. Determine the structure of the EMPLOYEES table.
+Column Name	Data Type	Data Length	Data Precision	Data Scale
+BONUS		VARCHAR2	5		
+COMMISSION_PCT	NUMBER		22		2		2
+DEPARTMENT_ID	NUMBER		22		4		0
+EMAIL		VARCHAR2	25		
+EMPLOYEE_ID	NUMBER		22		6		0
+FIRST_NAME	VARCHAR2	20		
+HIRE_DATE	DATE		7		
+JOB_ID		VARCHAR2	10		
+LAST_NAME	VARCHAR2	25		
+MANAGER_ID	NUMBER		22		6		0
+PHONE_NUMBER	VARCHAR2	20		
+SALARY		NUMBER		22		8		2
+
+
+4. Create a query to display all the data from the
+EMPLOYEES table. Separate each column output by
+a comma. Name the column THE_OUTPUT.
+
+SELECT
+  EMPLOYEE_ID || ',' ||
+  FIRST_NAME || ',' ||
+  LAST_NAME || ',' ||
+  EMAIL || ',' ||
+  PHONE_NUMBER || ',' ||
+  HIRE_DATE || ',' ||
+  JOB_ID || ',' ||
+  SALARY || ',' ||
+  COMMISSION_PCT || ',' ||
+  MANAGER_ID || ',' ||
+  DEPARTMENT_ID AS THE_OUTPUT
+FROM EMPLOYEES;
+

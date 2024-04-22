@@ -1,0 +1,49 @@
+1. Display the last name, department number, and salary of any
+employee whose department number and salary match the
+department number and salary of any employee who earns a
+commission.
+Hint: WHERE (salary, department_id) IN (SELECT … FROM …
+WHERE commission_pct IS NOT NULL);
+
+SELECT last_name, department_id, salary
+FROM employees
+WHERE (department_id, salary) IN (
+  SELECT department_id, salary
+  FROM employees
+  WHERE commission_pct IS NOT NULL
+);
+
+
+2. Display the last name, hire date, and salary for all employees
+who have the same salary and manager_ID as Kochhar.
+
+SELECT e.last_name, e.hire_date, e.salary
+FROM employees e
+WHERE e.salary = (
+    SELECT salary 
+    FROM employees 
+    WHERE last_name = 'Kochhar'
+) AND e.manager_id = (
+    SELECT manager_id 
+    FROM employees 
+    WHERE last_name = 'Kochhar'
+);
+
+
+3. Display details such as the employee ID, last name, and
+department ID of those employees who live in cities the names of
+which begin with T.
+Hint: WHERE department_id IN (SELECT .. WHERE location_id
+IN (SELECT ..));
+
+SELECT e.employee_id, e.last_name, e.department_id
+FROM employees e
+WHERE e.department_id IN (
+  SELECT d.department_id
+  FROM departments d
+  WHERE d.location_id IN (
+    SELECT l.location_id
+    FROM locations l
+    WHERE l.city LIKE 'T%'
+  )
+);
